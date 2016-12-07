@@ -2,6 +2,11 @@
 <html>
 <head>
 	<title>Premise WP Time Track</title>
+
+	<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
 </head>
 <body class="pwptt-app">
 
@@ -9,14 +14,46 @@
 
 		<div id="pwptt-login">
 
-			<form action="http://time.vallgroup.com/wp-json/wp/v2/premise_time_tracker/" method="post">
+			<form id="pwptt-new-timer" action="http://time.vallgroup.com/wp-json/wp/v2/premise_time_tracker/" method="post">
 
+				<input type="hidden" name="client" value="14QKIQEjmG0I">
+				<input type="hidden" name="secret" value="ZNkOnbpYi10KzSMvD0Y0cs3LZ9GWDv3UgD4uZqb8AoTTxuwp">
 
+				<p><input type="text" name="title" value="created remotely Via the API"></p>
+				<p><input type="text" name="content" value="Fuck you"></p>
+				<p><input type="text" name="pwptt_hours" value="3"></p>
+				<p><input type="text" name="status" value="publish"></p>
+
+				<p><button type="submit">Submit</button></p>
 
 			</form>
 		</div>
 
 	</div>
+
+<script type="text/javascript">
+	(function($){
+		$(document).ready(function(){
+			var form = $( '#pwptt-new-timer' );
+
+			form.submit( function( e ) {
+				e.preventDefault();
+
+				$.ajax( {
+					url: form.attr( 'action' ),
+					type: form.attr( 'method' ),
+					headers: {
+						Authorization: 'Basic ' + btoa( 'mario:vallejo8292' ),
+					},
+					data: form.serialize(),
+					success: function( r ) {
+						console.log( r );
+					}
+				} );
+			} );
+		});
+	}(jQuery));
+</script>
 
 </body>
 </html>
